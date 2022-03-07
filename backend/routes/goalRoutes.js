@@ -5,11 +5,12 @@ const {
     setGoal, 
     updateGoal, 
     deleteGoal } = require("../controllers/goalController");
+const { requiredSigin } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
 
-router.route("/").get(getGoals).post(setGoal);
-router.route("/:id").put(updateGoal).delete(deleteGoal);
+router.route("/").get(requiredSigin,getGoals).post(requiredSigin,setGoal);
+router.route("/:id").put(requiredSigin,updateGoal).delete(requiredSigin,deleteGoal);
 
 
 

@@ -6,11 +6,14 @@ const { resultsValidator } = require("../validators/appValidator");
 const User = require("../models/user");
 const { findOne } = require("../models/user");
 
-// Generate JWT
+// Generate JWT Token
 const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
+    return jwt.sign(
+      { id },
+      process.env.JWT_SECRET,
+      {
       expiresIn: '30d',
-    })
+      });
   }
   
 // @desc    Register new user
@@ -74,15 +77,17 @@ const loginUser = asyncHandler(async (req, res) => {
       res.status(400)
       throw new Error('Invalid Credential.')
     }
-    res.json({message:"login User"})
 })
 
 // @desc    Get user data
 // @route   GET /api/users/me
 // @access  Private
 const getMe = asyncHandler(async (req, res) => {
+    const {_id,username,email} =  await User.findById(req.user.id);
     res.status(200).json({
-        message:"Get Me"
+      id:_id,
+      username,
+      email,
     })
   })
   
