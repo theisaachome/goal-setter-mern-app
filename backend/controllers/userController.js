@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const { resultsValidator } = require("../validators/appValidator");
 const User = require("../models/user");
+const { findOne } = require("../models/user");
 
 // Generate JWT
 const generateToken = (id) => {
@@ -60,6 +61,19 @@ const registerUser = asyncHandler(async (req, res,next) => {
 // @access  Public
 const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
+    // check user
+    const user =await User.findOne({email});
+    if(user && (await bcrypt.compare(password,user.password))){
+      res.status(201).json({
+        _id: user.id,
+        username: user.username,
+        email: user.email,
+        token: generateToken(user._id),
+      });
+    }else{
+      res.status(400)
+      throw new Error('Invalid Credential.')
+    }
     res.json({message:"login User"})
 })
 
@@ -67,7 +81,6 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users/me
 // @access  Private
 const getMe = asyncHandler(async (req, res) => {
-    
     res.status(200).json({
         message:"Get Me"
     })
