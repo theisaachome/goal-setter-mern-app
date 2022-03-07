@@ -18,11 +18,17 @@ exports.registerValidator = () => {
         .not()
         .custom((val) => /[^A-za-z0-9\s]/g.test(val))
         .withMessage('Username not use uniq characters'),
+
+      check("email")
+        .isEmail()
+        .notEmpty()
+        .withMessage("email is required"),
+        
       check('password')
         .notEmpty()
         .withMessage('password is required')
         .isLength({ min: 8 })
-        .withMessage('password must be 8 characters')
+        .withMessage('Password must be 8 characters'),
     ]
   }
 

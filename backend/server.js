@@ -13,8 +13,10 @@ app.use(express.urlencoded({extended:false}))
 
 // Routes mount
 const goals = require("./routes/goalRoutes");
-const { json } = require("body-parser");
+const users = require("./routes/userRoutes");
+
 app.use("/api/goals",goals);
+app.use("/api/users",users);
 
 app.use(errorHandler);
 app.listen(PORT,()=>{

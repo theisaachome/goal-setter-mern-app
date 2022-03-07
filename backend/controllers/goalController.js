@@ -16,7 +16,7 @@ const getGoals = asyncHandler(async(req,res,next)=>{
 const setGoal = asyncHandler(async(req,res,next)=>{
     const errors = resultsValidator(req)
   if (errors.length > 0) {
-    return res.status(400);
+    res.status(400);
     throw new Error(errors[msg]);
   }
     const goal = await Goal.create({
@@ -35,6 +35,11 @@ const updateGoal = asyncHandler(async(req,res,next)=>{
     const goal = await Goal.findById(req.params.id);
     if(!goal){
         throw new Error("No goal with given id",req.params.id);
+    }
+    const errors = resultsValidator(req)
+    if (errors.length > 0) {
+      res.status(400);
+      throw new Error(errors[msg]);
     }
     const updatedGoal = await Goal.findByIdAndUpdate(req.params.id,req.body,{new:true});
     res.status(200).json(updatedGoal);
