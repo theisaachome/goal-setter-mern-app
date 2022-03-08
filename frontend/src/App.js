@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Routers, Routes,Route } from "react-router-dom";
+import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -9,6 +10,7 @@ function App() {
     < >
       <Routers>
         <div className="container">
+          <Header/>
            <Routes>
              <Route path='/' element={<Dashboard/>} />
              <Route path='/login' element={<Login/>} />
