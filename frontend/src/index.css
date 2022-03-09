@@ -85,7 +85,22 @@ h3 {
 .heading p {
   color: #828282;
 }
-
+.goal__button{
+  position: fixed;
+  z-index: 10;
+  bottom: 48px;
+  right: 32px;
+  padding: 5px 10px;
+  background-color: #000;
+  color: white;
+  border: 2px solid #021303;
+  border-radius: 50px;
+  box-shadow: 4px 4px 10px 3px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.goal__button a{
+  color: inherit;
+}
 .goals {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

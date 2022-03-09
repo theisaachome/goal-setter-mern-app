@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
+import {  createGoal } from "../features/goals/goalSlice";
 const options = [
   {
+    label: "Choose One",
+    value: "",
+  },
+  {
     label: "Daily",
-    value: "daily",
+    value: "Daily",
   },
   {
     label: "Weekly",
@@ -22,6 +27,10 @@ const options = [
 
 const goalStatusOptions = [
   {
+    label: "Choose One",
+    value: "",
+  },
+  {
     label: "Planned",
     value: "Planned",
   },
@@ -37,6 +46,7 @@ const goalStatusOptions = [
 ];
 
 const GoalForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     text: "",
     typeOfGoal: "",
@@ -46,11 +56,16 @@ const GoalForm = () => {
   const { text, typeOfGoal, goalStatus, description } = formData;
 
   const onChange = (e) => {
-    setFormData((prevState) => ({
+    console.log(e.target.name);
+    
+    setFormData((prevState)=>(
+      {
       ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+      [e.target.name]:e.target.value
+     }))
   };
+
+  const dispatch  = useDispatch();
   const onSubmit = (e) => {
     e.preventDefault();
     const goalData = {
@@ -59,7 +74,14 @@ const GoalForm = () => {
       goalStatus,
       description,
     };
-    console.log(goalData);
+    dispatch(createGoal(goalData));
+    navigate("/")
+    setFormData({
+      text: "",
+      typeOfGoal: "",
+      goalStatus: "",
+      description: "",
+    });
   };
 
   return (
